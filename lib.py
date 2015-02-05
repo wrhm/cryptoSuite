@@ -28,6 +28,17 @@ def parse_int(s):
 		return 0
 	return int(val)
 
+def atbash(message):
+	result = ''
+	for character in message:
+		if character in alc:
+			result += alc[25-alc.index(character)]
+		elif character in auc:
+			result += auc[25-auc.index(character)]
+		else:
+			result += character
+	return result
+
 def caesar(message,shift):
 	while shift<0:
 		shift+=26
@@ -44,13 +55,5 @@ def caesar(message,shift):
 def rot13(message):
 	return caesar(message,13)
 
-def atbash(message):
-	result = ''
-	for character in message:
-		if character in alc:
-			result += alc[25-alc.index(character)]
-		elif character in auc:
-			result += auc[25-auc.index(character)]
-		else:
-			result += character
-	return result
+def caesar_crack(message):
+	return 0

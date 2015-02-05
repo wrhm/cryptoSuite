@@ -16,26 +16,32 @@ print '***************************\n'
 print 'Follow the prompts to (en/de)crypt your message.\n'
 
 ciphers = {'a':'atbash','c':'caesar','r':'rot13'}
-modes = {'e':'Encrypting','d':'Decrypting'}
+directions = {'e':'Encrypting','d':'Decrypting'}
 #Main control structure
 while True:#
-	direction,cipher = '',''
+	direction,cipher,automation = '','',''
 	cipher = parse("Pick a cipher: (a)tbash, (c)aesar, (r)ot13\n>> ", 'acr')
 	print 'Using %s.'%(ciphers[cipher])
 	if cipher=='c':
 		direction = parse("Pick mode: (e)ncrypt, (d)ecrypt\n>> ", 'ed')
-	mode = cipher+direction
+		if direction=='d':
+			automation = parse("Decryption: (a)utomatic, (m)anual\n>> ", 'am')
 	if direction!='':
-		print '%s...'%modes[direction]
+		print '%s...'%directions[direction]
 	entry = raw_input('\n  text: ')
-	if mode[0]=='c':
-		shift = parse_int(raw_input(" shift: "))
-		if mode[1]=='e':
+	if cipher=='c':
+		shift = None
+		if direction=='e':
+			shift = parse_int(raw_input(" shift: "))
 			output = caesar(entry,shift)
 		else:
+			if automation=='a':
+				shift = caesar_crack(entry)
+			else:
+				shift = parse_int(raw_input(" shift: "))
 			output = caesar(entry,26-shift)
-	elif mode=='a':
+	elif cipher=='a':
 		output = atbash(entry)
-	elif mode=='r':
+	elif cipher=='r':
 		output = rot13(entry)
 	print 'Result: %s\n'%output
