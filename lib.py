@@ -70,6 +70,7 @@ def harvest_freqs(message):
 		ratio[letter] = float(count[letter])/total_letters
 	return ratio
 
+'''
 raw_eng_freqs = {'E':12.02,'T':9.10,'A':8.12,'O':7.68,'I':7.31,'N':6.95,
 'S':6.28,'R':6.02,'H':5.92,'D':4.32,'L':3.98,'U':2.88,'C':2.71,'M':2.61,
 'F':2.30,'Y':2.11,'W':2.09,'G':2.03,'P':1.82,'B':1.49,'V':1.11,'K':0.69,
@@ -77,6 +78,7 @@ raw_eng_freqs = {'E':12.02,'T':9.10,'A':8.12,'O':7.68,'I':7.31,'N':6.95,
 eng_freqs = dict()
 for letter in raw_eng_freqs: #normalize frequencies in dataset
 	eng_freqs[letter] = raw_eng_freqs[letter]*0.01
+'''
 
 monogram_counts = dict()
 f = open('english_monograms.txt')
@@ -128,5 +130,5 @@ def caesar_crack(message):
 		if scores[shift]<min_score:
 			winner = shift
 			min_score = scores[winner]
-	print 'Winning shift:',shift
+	print 'Winning shift:',winner
 	return winner

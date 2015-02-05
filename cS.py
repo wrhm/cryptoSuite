@@ -21,7 +21,7 @@ directions = {'e':'Encrypting','d':'Decrypting'}
 #Main control structure
 while True:#
 	direction,cipher,automation = '','',''
-	cipher = parse("Pick a cipher: (a)tbash, (c)aesar, (r)ot13\n>> ", 'acr')
+	cipher = parse("Pick a cipher: (a)tbash, (c)aesar, (r)ot13; or (q)uit\n>> ", 'acr')
 	print 'Using %s.'%(ciphers[cipher])
 	if cipher=='c':
 		direction = parse("Pick mode: (e)ncrypt, (d)ecrypt\n>> ", 'ed')
