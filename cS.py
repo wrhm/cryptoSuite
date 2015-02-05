@@ -8,7 +8,7 @@ For now, I/O is handled via command line.
 
 from lib import *
 
-print '***************************'
+print '\n***************************'
 print '*                         *'
 print '* Welcome to cryptoSuite! *'
 print '*                         *'
@@ -17,6 +17,7 @@ print 'Follow the prompts to (en/de)crypt your message.\n'
 
 ciphers = {'a':'atbash','c':'caesar','r':'rot13'}
 directions = {'e':'Encrypting','d':'Decrypting'}
+
 #Main control structure
 while True:#
 	direction,cipher,automation = '','',''
@@ -37,11 +38,12 @@ while True:#
 		else:
 			if automation=='a':
 				shift = caesar_crack(entry)
+				output = caesar(entry,shift)
 			else:
 				shift = parse_int(raw_input(" shift: "))
-			output = caesar(entry,26-shift)
+				output = caesar(entry,26-shift)
 	elif cipher=='a':
 		output = atbash(entry)
 	elif cipher=='r':
 		output = rot13(entry)
-	print 'Result: %s\n'%output
+	print '\nResult: %s\n'%output
