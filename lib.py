@@ -97,7 +97,7 @@ for line in f.readlines():
 f.close()
 '''
 
-# x^2 (C,E) = sum_{i=A}^{i=Z} \frac{(C_i-E_i)^2}{E_i}
+# \chi^2 (C,E) = sum_{i=A}^{i=Z} \frac{(C_i-E_i)^2}{E_i}
 # C_A is count (not prob) of A, E_A is expected count of A
 def chi_sqr(message):
 	M = string.upper(message)
@@ -132,3 +132,33 @@ def caesar_crack(message):
 			min_score = scores[winner]
 	print 'Winning shift:',winner
 	return winner
+
+def vig_enc(message,key):
+	key = "".join([x for x in string.upper(key) if x in auc])
+	result = ""
+	i = 0
+	for character in message:
+		if character in auc:
+			result += auc[(auc.index(character)+auc.index(key[i]))%26]
+			i = (i+1)%len(key)
+		elif character in alc:
+			result += alc[(alc.index(character)+alc.index(string.lower(key[i])))%26]
+			i = (i+1)%len(key)
+		else:
+			result += character
+	return result
+
+def vig_dec(message,key):
+	key = "".join([x for x in string.upper(key) if x in auc])
+	result = ""
+	i = 0
+	for character in message:
+		if character in auc:
+			result += auc[(auc.index(character)-auc.index(key[i])+26)%26]
+			i = (i+1)%len(key)
+		elif character in alc:
+			result += alc[(alc.index(character)-alc.index(string.lower(key[i]))+26)%26]
+			i = (i+1)%len(key)
+		else:
+			result += character
+	return result

@@ -1,4 +1,0 @@
-TODOs.txt
-
- - Automate decryption, where possible
-   - Let user choose automatic/manual, where possible

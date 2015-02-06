@@ -15,21 +15,22 @@ print '*                         *'
 print '***************************\n'
 print 'Follow the prompts to (en/de)crypt your message.\n'
 
-ciphers = {'a':'atbash','c':'caesar','r':'rot13'}
+ciphers = {'a':'atbash','c':'caesar','r':'rot13','v':'vigenere'}
 directions = {'e':'Encrypting','d':'Decrypting'}
 
 #Main control structure
 while True:#
 	direction,cipher,automation = '','',''
-	cipher = parse("Pick a cipher: (a)tbash, (c)aesar, (r)ot13; or (q)uit\n>> ", 'acr')
+	cipher = parse("Pick a cipher: (r)ot13, (a)tbash, (c)aesar, (v)igenere; or (q)uit\n>> ", 'acrv')
 	print 'Using %s.'%(ciphers[cipher])
-	if cipher=='c':
+	if cipher in 'cv':
 		direction = parse("Pick mode: (e)ncrypt, (d)ecrypt\n>> ", 'ed')
 		if direction=='d':
 			automation = parse("Decryption: (a)utomatic, (m)anual\n>> ", 'am')
 	if direction!='':
 		print '%s...'%directions[direction]
 	entry = raw_input('\n  text: ')
+	output = ""
 	if cipher=='c':
 		shift = None
 		if direction=='e':
@@ -42,6 +43,17 @@ while True:#
 			else:
 				shift = parse_int(raw_input(" shift: "))
 				output = caesar(entry,26-shift)
+	elif cipher=='v':
+		key = None
+		if direction=='e':
+			key = raw_input("   key: ")
+			output = vig_enc(entry,key)
+		else:
+			if automation=='a':
+				output = '[Need to implement vig_auto_dec]' #output = vig_auto_dec
+			else:
+				key = raw_input("   key: ")
+				output = vig_dec(entry,key)
 	elif cipher=='a':
 		output = atbash(entry)
 	elif cipher=='r':
