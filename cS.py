@@ -50,7 +50,8 @@ while True:#
 			output = vig_enc(entry,key)
 		else:
 			if automation=='a':
-				output = '[Need to implement vig_auto_dec]' #output = vig_auto_dec
+				output = '[Need to implement vig_auto_dec]'
+				#output = vig_auto_dec(entry)
 			else:
 				key = raw_input("   key: ")
 				output = vig_dec(entry,key)

@@ -162,3 +162,6 @@ def vig_dec(message,key):
 		else:
 			result += character
 	return result
+
+def vig_auto_dec(message):
+	pass
