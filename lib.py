@@ -183,6 +183,14 @@ def split(s,n):
 		p = (p+1)%n
 	return t
 
+def merge(strs):
+	result = ""
+	for p in xrange(len(strs[0])):
+		for s in xrange(len(strs)):
+			if p<len(strs[s]):
+				result += strs[s][p]
+	return result
+
 def vig_auto_dec(message):
 	letters = [x for x in string.upper(message) if x in auc]
 	key_lengths = []
@@ -202,12 +210,18 @@ def vig_auto_dec(message):
 	print 'Possible key_lengths:',key_lengths
 	valid_lengths = []
 	for vl in xrange(1,16):
-		valid_lengths += [vl]
+		valid_lengths += [str(vl)]
 	key_len = int(parse("Choose key_len:\n>> ", valid_lengths))#map(str,key_lengths)))
 	#Now that the key length is known, determine the key
 	#Approach 1 (Hill-climbing): key = 'A'*key_len, for i in xrange(key_len):
 	#Approach 2: break each caesar
 	crypts = split(''.join(letters),key_len)
 	key = ''.join([auc[x] for x in map(caesar_crack,crypts)])
-	return key
+	print 'Key: %s'%key
+	clear = ""
+	clears = []
+	for i in xrange(len(crypts)):
+		clears += [caesar(crypts[i],auc.index(key[i]))]
+	clear = merge(clears)
+	return clear
 	
