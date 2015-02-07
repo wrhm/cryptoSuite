@@ -130,7 +130,7 @@ def caesar_crack(message):
 		if scores[shift]<min_score:
 			winner = shift
 			min_score = scores[winner]
-	print 'Winning shift:',winner
+	#print 'Winning shift:',winner
 	return winner
 
 def vig_enc(message,key):
@@ -163,5 +163,51 @@ def vig_dec(message,key):
 			result += character
 	return result
 
+#Index of coincidence
+def ic(message):
+	M = string.upper(message)
+	N = 0
+	ic = 0.0
+	for letter in auc:
+		lc = M.count(letter)
+		N += lc
+		ic += lc*(lc-1)
+	return ic/(N*(N-1))
+
+#Splits string into groups of every nth character
+def split(s,n):
+	t = [""]*n
+	p = 0
+	for i in xrange(len(s)):
+		t[p] += s[i]
+		p = (p+1)%n
+	return t
+
 def vig_auto_dec(message):
-	pass
+	letters = [x for x in string.upper(message) if x in auc]
+	key_lengths = []
+	avg_IC = dict()
+	for k in xrange(1,16):
+		#ics = map(ic,split(message,k))
+		ics = map(ic,split(''.join(letters),k))
+		avg_IC[k] = sum(ics)*1.0/len(ics)
+	kl = 1
+	kl_score = avg_IC[kl]
+	for k in xrange(2,16):
+		if avg_IC[k]<kl_score:
+			kl_score = avg_IC[k]
+			kl = k
+			key_lengths += [k]
+	#key_len = key_lengths[0]
+	print 'Possible key_lengths:',key_lengths
+	valid_lengths = []
+	for vl in xrange(1,16):
+		valid_lengths += [vl]
+	key_len = int(parse("Choose key_len:\n>> ", valid_lengths))#map(str,key_lengths)))
+	#Now that the key length is known, determine the key
+	#Approach 1 (Hill-climbing): key = 'A'*key_len, for i in xrange(key_len):
+	#Approach 2: break each caesar
+	crypts = split(''.join(letters),key_len)
+	key = ''.join([auc[x] for x in map(caesar_crack,crypts)])
+	return key
+	
