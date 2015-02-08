@@ -192,7 +192,8 @@ def merge(strs):
 	return result
 
 def vig_auto_dec(message):
-	letters = [x for x in string.upper(message) if x in auc]
+	return '[Need to fix vig_auto_dec]'
+	'''letters = [x for x in string.upper(message) if x in auc]
 	key_lengths = []
 	avg_IC = dict()
 	for k in xrange(1,16):
@@ -223,5 +224,10 @@ def vig_auto_dec(message):
 	for i in xrange(len(crypts)):
 		clears += [caesar(crypts[i],auc.index(key[i]))]
 	clear = merge(clears)
-	return clear
+	return clear'''
+
+def crack(message):
+	sols = [atbash(message),rot13(message),caesar(message,caesar_crack(message)),vig_auto_dec(message)]
+	response = 'Possible decryptions:\n\tatb: %s\n\tr13: %s\n\tcae: %s\n\tvig: %s'
+	return response%(sols[0],sols[1],sols[2],sols[3])
 	
